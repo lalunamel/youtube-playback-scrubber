@@ -98,7 +98,7 @@ export default function ControlPanel({
         {/* Timeline / Scrubber */}
         <div 
             ref={timelineRef}
-            className="relative w-full h-12 flex items-center group select-none"
+            className="relative w-full h-16 flex items-center group select-none"
         >
            {/* Background Track */}
            <div className="absolute w-full h-2 bg-zinc-800 rounded-full overflow-hidden">
@@ -129,13 +129,28 @@ export default function ControlPanel({
              className="absolute w-full h-full opacity-0 cursor-pointer z-10"
            />
            
+           {/* Playhead (Professional Line Scrubber) - z-[15] */}
+           <div 
+               className="absolute top-0 h-full pointer-events-none z-[15] flex flex-col items-center"
+               style={{ 
+                   left: `${getPercent(currentTime)}%`,
+                   transform: 'translateX(-50%)' 
+               }}
+           >
+                {/* The Knob */}
+                <div className="absolute -top-1.5 w-4 h-4 bg-blue-500 rounded-full shadow-md ring-2 ring-white transition-transform scale-100" />
+                
+                {/* The Line */}
+                <div className="w-0.5 h-full bg-white shadow-[0_0_4px_rgba(0,0,0,0.5)]" />
+           </div>
+
            {/* Interactive Loop Handles (z-20: Above seek input) */}
            {isLooping && (
              <>
                {/* Loop Start Handle */}
                <div 
                  onMouseDown={(e) => handleHandleMouseDown(e, "start")}
-                 className="absolute top-1/2 -translate-y-1/2 w-4 h-8 bg-blue-500 hover:bg-white border-2 border-white rounded-md z-20 cursor-ew-resize shadow-lg flex items-center justify-center group/handle transition-colors"
+                 className="absolute top-1/2 -translate-y-1/2 w-4 h-8 bg-blue-500/80 hover:bg-blue-400 border-2 border-white/80 rounded-md z-20 cursor-ew-resize shadow-lg flex items-center justify-center group/handle transition-colors backdrop-blur-sm"
                  style={{ left: `${getPercent(loopStart)}%`, transform: 'translate(-50%, -50%)' }}
                >
                    <div className="w-0.5 h-3 bg-black/20" />
@@ -144,7 +159,7 @@ export default function ControlPanel({
                {/* Loop End Handle */}
                <div 
                  onMouseDown={(e) => handleHandleMouseDown(e, "end")}
-                 className="absolute top-1/2 -translate-y-1/2 w-4 h-8 bg-blue-500 hover:bg-white border-2 border-white rounded-md z-20 cursor-ew-resize shadow-lg flex items-center justify-center group/handle transition-colors"
+                 className="absolute top-1/2 -translate-y-1/2 w-4 h-8 bg-blue-500/80 hover:bg-blue-400 border-2 border-white/80 rounded-md z-20 cursor-ew-resize shadow-lg flex items-center justify-center group/handle transition-colors backdrop-blur-sm"
                  style={{ left: `${getPercent(loopEnd)}%`, transform: 'translate(-50%, -50%)' }}
                >
                    <div className="w-0.5 h-3 bg-black/20" />
